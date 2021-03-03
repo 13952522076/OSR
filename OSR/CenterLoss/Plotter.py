@@ -68,7 +68,7 @@ def plot_feature(net,criterion_centerloss, plotloader,
     # currently only support 10 classes, for a good visualization.
     # change plot_class_num would lead to problems.
     legends= ['0', '1', '2', '3', '4', '5', '6', 'unknown', '8', '9']
-    plt.legend(legends[0:plot_class_num]+['center'], loc='upper right',s=30., fontsize = 20)
+    plt.legend(legends[0:plot_class_num]+['center'], loc='upper right', markerscale=2., fontsize = 20)
 
     save_name = os.path.join(dirname, 'epoch_' + str(epoch) + '.png')
     plt.savefig(save_name, bbox_inches='tight',dpi=plot_quality)
