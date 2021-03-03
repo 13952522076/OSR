@@ -7,7 +7,9 @@ import numpy as np
 import os
 
 
-def plot_feature(net,criterion_centerloss, plotloader, device,dirname, epoch=0,plot_class_num=10, maximum=500, plot_quality=150):
+def plot_feature(net,criterion_centerloss, plotloader,
+                 device, dirname, epoch=0,plot_class_num=10,
+                 maximum=500, plot_quality=150):
     plot_features = []
     plot_labels = []
     with torch.no_grad():
@@ -36,6 +38,7 @@ def plot_feature(net,criterion_centerloss, plotloader, device,dirname, epoch=0,p
     except:
         centroids = centroids.data.numpy()
     # print(centroids)
+    plt.figure(figsize=(9, 9))
     colors = ['C0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9']
     for label_idx in range(plot_class_num):
         features = plot_features[plot_labels == label_idx,:]
@@ -58,6 +61,7 @@ def plot_feature(net,criterion_centerloss, plotloader, device,dirname, epoch=0,p
     # change plot_class_num would lead to problems.
     legends= ['0', '1', '2', '3', '4', '5', '6', 'unknown', '8', '9']
     plt.legend(legends[0:plot_class_num]+['center'], loc='upper right')
+    plt.rcParams["font.family"] = "Times New Roman"
 
     save_name = os.path.join(dirname, 'epoch_' + str(epoch) + '.png')
     plt.savefig(save_name, bbox_inches='tight',dpi=plot_quality)
