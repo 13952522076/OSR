@@ -18,7 +18,6 @@ plt.rcParams['font.size'] = 12
 def plot_feature(net,criterion_centerloss, plotloader,
                  device, dirname, epoch=0,plot_class_num=10,
                  maximum=500, plot_quality=150):
-    plt.rcParams["font.family"] = "Times New Roman"
     plot_features = []
     plot_labels = []
     with torch.no_grad():
