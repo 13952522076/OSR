@@ -141,6 +141,9 @@ def main():
             if args.plot:
                 plot_feature(net,criterion_centerloss, trainloader, device, args.plotfolder, epoch=epoch,
                          plot_class_num=args.train_class_num,maximum=args.plot_max, plot_quality=args.plot_quality)
+                plot_feature(net, criterion_centerloss, testloader, device, args.plotfolder, epoch=f"test_{epoch}",
+                             plot_class_num=args.train_class_num + 1, maximum=args.plot_max,
+                             plot_quality=args.plot_quality)
 
             logger.append([epoch + 1, train_loss, softmax_loss, center_loss, train_acc])
             scheduler.step()
