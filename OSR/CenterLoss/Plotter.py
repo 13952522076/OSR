@@ -3,10 +3,15 @@ import torch.nn as nn
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import RcParams
 import numpy as np
 import os
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.serif'] = ['Times New Roman']
+latex_style_times = RcParams({'font.family': 'serif',
+               'font.serif': ['Times'],
+               'text.usetex': True,
+               })
+
+plt.style.use(latex_style_times)
 plt.rcParams['font.size'] = 12
 
 
