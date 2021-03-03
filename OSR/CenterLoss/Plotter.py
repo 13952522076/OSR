@@ -5,8 +5,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-plt.rcParams["font.family"] = "Times New Roman"
-plt.rcParams['font.size'] = 20
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = ['Times New Roman']
+plt.rcParams['font.size'] = 12
 
 
 def plot_feature(net,criterion_centerloss, plotloader,
