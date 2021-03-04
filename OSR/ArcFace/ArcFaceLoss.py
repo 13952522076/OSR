@@ -21,7 +21,8 @@ class ArcFaceLoss(nn.Module):
         cosine = cosine.clamp(-1, 1)
         sine = torch.sqrt(torch.max(1.0 - torch.pow(cosine, 2), torch.ones_like(cosine) * 1e-7))
         phi = cosine * self.cos_m - sine * self.sin_m
-        phi = torch.where((cosine - self.th) > 0, phi, cosine - self.mm)
+        # phi = torch.where((cosine - self.th) > 0, phi, cosine - self.mm)
+        phi = torch.where(cosine > 0, phi, cosine)
         one_hot = torch.zeros_like(cosine)
         one_hot.scatter_(1, targets.view(-1, 1), 1)
         output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
