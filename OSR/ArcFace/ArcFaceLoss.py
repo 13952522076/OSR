@@ -9,7 +9,6 @@ class ArcFaceLoss(nn.Module):
         super(ArcFaceLoss, self).__init__()
         self.scaling = scaling
         self.m = m
-        self.ce = nn.CrossEntropyLoss()
         self.cos_m = math.cos(m)
         self.sin_m = math.sin(m)
         # ensure cos(theta+m) decreases in the range of (0,pi)
@@ -19,15 +18,14 @@ class ArcFaceLoss(nn.Module):
     def forward(self, net_out, targets):
         cosine = net_out["cosine_fea2cen"]
         cosine = cosine.clamp(-1, 1)
-        sine = torch.sqrt(torch.max(1.0 - torch.pow(cosine, 2), torch.ones_like(cosine) * 1e-7))
+        sine = torch.sqrt((1.0 - torch.pow(cosine, 2)).clamp(0, 1))
         phi = cosine * self.cos_m - sine * self.sin_m
-        # phi = torch.where((cosine - self.th) > 0, phi, cosine - self.mm)
-        phi = torch.where(cosine > 0, phi, cosine)
-        one_hot = torch.zeros_like(cosine)
-        one_hot.scatter_(1, targets.view(-1, 1), 1)
+        phi = torch.where(cosine > self.th, phi, cosine - self.mm)
+        one_hot = torch.zeros(cosine.size(), device='cuda')
+        one_hot.scatter_(1, targets.view(-1, 1).long(), 1)
         output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
         output = output * self.scaling
-        loss = self.ce(output, targets)
+        loss = F.cross_entropy(output, targets)
 
         return {
             "total": loss
