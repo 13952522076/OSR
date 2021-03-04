@@ -48,7 +48,7 @@ parser.add_argument('--embed_dim', default=2, type=int, help='embedding feature 
 
 # Parameters for optimizer
 parser.add_argument('--scaling', default=32, type=int, help='scaling cosine distance for exp')
-parser.add_argument('--m', default=2, type=int, help='scaling cosine distance for exp')
+parser.add_argument('--m', default=0.5, type=float, help='scaling cosine distance for exp')
 # Parameters for stage 1
 parser.add_argument('--stage1_resume', default='', type=str, metavar='PATH', help='path to latest checkpoint')
 parser.add_argument('--stage1_es', default=80, type=int, help='epoch size')

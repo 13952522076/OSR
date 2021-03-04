@@ -5,7 +5,7 @@ import math
 
 
 class ArcFaceLoss(nn.Module):
-    def __init__(self,scaling=32, m=2):
+    def __init__(self,scaling=32, m=0.5):
         super(ArcFaceLoss, self).__init__()
         self.scaling = scaling
         self.m = m
