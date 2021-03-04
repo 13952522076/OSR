@@ -13,14 +13,15 @@ class ArcFaceLoss(nn.Module):
         self.cos_m = math.cos(m)
         self.sin_m = math.sin(m)
         # ensure cos(theta+m) decreases in the range of (0,pi)
-        self.th = math.cos(3.1415926 - m)
-        self.mm = math.sin(3.1415926 - m) * m
+        self.th = math.cos(math.pi - m)
+        self.mm = math.sin(math.pi - m) * m
 
     def forward(self, net_out, targets):
         cosine = net_out["cosine_fea2cen"]
         cosine = cosine.clamp(-1, 1)
         sine = torch.sqrt(torch.max(1.0 - torch.pow(cosine, 2), torch.ones_like(cosine) * 1e-7))
         phi = cosine * self.cos_m - sine * self.sin_m
+        phi = torch.where((cosine - self.th) > 0, phi, cosine - self.mm)
         one_hot = torch.zeros_like(cosine)
         one_hot.scatter_(1, targets.view(-1, 1), 1)
         output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
@@ -49,4 +50,4 @@ def demo():
     print(dist_loss)
 
 
-# demo()
+demo()

@@ -125,7 +125,7 @@ def main_stage1():
         logger.set_names(['Epoch', 'Train Loss', 'Train Acc.'])
 
     # after resume
-    criterion = ArcFaceLoss(scaling=args.scaling,m=args.m)
+    criterion = ArcFaceLoss(scaling=args.scaling, m=args.m)
     optimizer = optim.Adam(net.parameters(), lr=args.stage1_lr)
 
     for epoch in range(start_epoch, args.stage1_es):
