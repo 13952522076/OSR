@@ -24,9 +24,8 @@ class DFPNet(nn.Module):
             nn.PReLU(),
             nn.Linear(self.feat_dim // 16, embed_dim, bias=False)
         )
-        self.centroids = nn.Parameter(torch.randn(num_classes, embed_dim))
+        self.centroids = nn.Parameter(torch.FloatTensor(num_classes, embed_dim))
         nn.init.xavier_uniform_(self.centroids)
-        self.centroids.data.uniform_(-1, 1).renorm_(2, 1, 1e-5).mul_(1e5)
 
     def get_backbone_last_layer_out_channel(self):
         if self.backbone_name.startswith("LeNet"):
