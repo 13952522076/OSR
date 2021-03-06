@@ -137,6 +137,8 @@ def main():
 
             logger.append([epoch + 1, train_loss, train_loss, train_acc])
             scheduler.step()
+            if epoch %10 == 0:
+                test(net, testloader, device)
 
     if args.plot:
         plot_feature(net, testloader, device, args.plotfolder, epoch="test",
