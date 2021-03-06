@@ -137,7 +137,6 @@ def main():
 
             logger.append([epoch + 1, train_loss, train_loss, train_acc])
             scheduler.step()
-            test(net, testloader, device)
 
     if args.plot:
         plot_feature(net, testloader, device, args.plotfolder, epoch="test",
@@ -205,9 +204,10 @@ def test(net, testloader, device):
     known_softmax_hist = torch.histc(known_softmax, bins=50, min=0, max=1)
     unknown_softmax_hist = torch.histc(unknown_softmax, bins=50, min=0, max=1)
 
-    print("known_norm\t unknown_norm\t known_softmax\t unknown_softmax\t")
+    print(f"min-norm:{min_norm} max-norm:{max_norm}")
+    print("known_norm\tunknown_norm\tknown_softmax\tunknown_softmax\t")
     for i in range(50):
-        print(f"{known_norm_hist[i]}\t {unknown_norm_hist[i]}\t {known_softmax_hist[i]}\t {unknown_softmax_hist[i]}\t")
+        print(f"{known_norm_hist[i]}\t{unknown_norm_hist[i]}\t{known_softmax_hist[i]}\t{unknown_softmax_hist[i]}\t")
     print("Done")
 
 def save_model(net, epoch, path):
