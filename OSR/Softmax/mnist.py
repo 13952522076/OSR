@@ -97,7 +97,6 @@ def main():
 
     print('==> Building model..')
     net = Network(backbone=args.arch, num_classes=args.train_class_num,embed_dim=args.embed_dim)
-    fea_dim = net.classifier.in_features
     net = net.to(device)
 
     if device == 'cuda':
@@ -113,8 +112,6 @@ def main():
             print('==> Resuming from checkpoint..')
             checkpoint = torch.load(args.resume)
             net.load_state_dict(checkpoint['net'])
-            best_acc = checkpoint['acc']
-            print("BEST_ACCURACY: "+str(best_acc))
             start_epoch = checkpoint['epoch']
             logger = Logger(os.path.join(args.checkpoint, 'log.txt'), resume=True)
         else:
@@ -213,11 +210,10 @@ def test(net, testloader, device):
         print(f"{known_norm_hist[i]}\t {unknown_norm_hist[i]}\t {known_softmax_hist[i]}\t {unknown_softmax_hist[i]}\t")
     print("Done")
 
-def save_model(net, centerloss, epoch, path):
+def save_model(net, epoch, path):
     print('Saving..')
     state = {
         'net': net.state_dict(),
-        'centerloss': centerloss.state_dict(),
         'epoch': epoch,
     }
     torch.save(state, path)
