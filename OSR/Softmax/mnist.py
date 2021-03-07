@@ -188,7 +188,9 @@ def test(net, testloader, device):
             unknown_data.append(torch.norm(unknown_features, p=2, dim=1,keepdim=False))
 
             logits = torch.softmax(logits,dim=1)
+            print(f"logits shape {logits.shape}")
             logits,_ = torch.max(logits,dim=1,keepdim=False)
+            print(f"New logits shape {logits.shape}")
             known_logits = logits[targets < args.train_class_num]
             unknown_logits = logits[targets == args.train_class_num]
             known_softmax.append(known_logits)
