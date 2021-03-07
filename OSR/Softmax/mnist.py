@@ -187,10 +187,12 @@ def test(net, testloader, device):
             known_data.append(torch.norm(known_features,p=2, dim=1,keepdim=False))
             unknown_data.append(torch.norm(unknown_features, p=2, dim=1,keepdim=False))
 
+            logits = torch.softmax(logits,dim=1)
+            logits,_ = torch.max(logits,dim=1,keepdim=False)
             known_logits = logits[targets < args.train_class_num]
             unknown_logits = logits[targets == args.train_class_num]
-            known_softmax.append(torch.softmax(known_logits,dim=1))
-            unknown_softmax.append(torch.softmax(unknown_logits, dim=1))
+            known_softmax.append(known_logits)
+            unknown_softmax.append(unknown_logits)
 
             progress_bar(batch_idx, len(testloader))
 
