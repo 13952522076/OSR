@@ -58,7 +58,7 @@ def plot_feature(net, args, plotloader, device, dirname, epoch=0, plot_class_num
             features[:, 0],
             features[:, 1],
             c=color,
-            s=1,
+            s=10,
         )
     # plt.scatter(
     #     centroids[:, 0],
@@ -73,9 +73,10 @@ def plot_feature(net, args, plotloader, device, dirname, epoch=0, plot_class_num
     legends = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     if testmode:
         legends[plot_class_num-1] = 'unkown'
-    plt.legend(legends[0:plot_class_num],markerscale=5., loc='upper right', fontsize = 20)
+    # plt.legend(legends[0:plot_class_num],markerscale=5., loc='upper right', fontsize = 20)
 
     save_name = os.path.join(dirname, 'epoch_' + str(epoch) + '.png')
+    plt.axis('off')
     plt.savefig(save_name, bbox_inches='tight', dpi=plot_quality)
     plt.close()
 
