@@ -58,7 +58,7 @@ def plot_feature(net, args, plotloader, device, dirname, epoch=0, plot_class_num
             features[:, 0],
             features[:, 1],
             c=color,
-            s=5,
+            s=10,
         )
     # plt.scatter(
     #     centroids[:, 0],
